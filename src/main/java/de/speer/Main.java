@@ -1,7 +1,11 @@
 package de.speer;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -34,6 +38,14 @@ public class Main {
                 .sorted(Comparator.naturalOrder())
                 .collect(Collectors.toList());
         System.out.println(currywurst);
+
+        try {
+            Files.lines(Path.of("src/main/java/de/speer/students.csv"))
+                    .skip(1)
+                    .forEach(line -> new Student(line.split(",")[0],line.split(",")[1],line.split(",")[2],line.split(",")[3]));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 }
